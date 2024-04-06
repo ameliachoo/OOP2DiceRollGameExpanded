@@ -10,29 +10,36 @@ namespace OOP2DiceRollGameExpanded;
 public static class Testing
 {
     /// <summary>
-    /// 
+    /// method to run tests for the dice rolling game
     /// </summary>
-    /// <returns> returns 0 if all tests pass </returns>
     public static void RunTest() 
     {
-        Console.WriteLine("-------------------\nRunning appropriate tests");
+        // display messages indicating that tests are running
+        Console.WriteLine("-----------\nRunning appropriate tests");
 
+        // create a new Die object for testing
         var die = new Die();
-        
-        List<int> rolls = [];
         
         // loops 1000 times to run multiple tests
         for (int i = 0; i < 1000; i++)
         {
-            // will contain the testing
+            // rolls the die
             die.Roll();
+            // assert that the rolled value is between 1 and 6 (inclusive)
+            Debug.Assert(die.DiceRoll is >= 1 and <= 6);
         }
         
-        // array to hold game options (currently empty)
+        // array to hold game options
         Game[] gameOptions =
-        [
-        ];
-            
+        {
+            new SevensOut(),
+            new ThreeOrMore()
+        };
+        
+        // runs tests for SevensOut game and store the results
+        int resultSevens = gameOptions[0].RunTests();
+        // runs tests for ThreeOrMore game and store the results
+        int resultThree = gameOptions[1].RunTests();
  
         // prints message indicating all tests passed
         Debug.WriteLine("All tests passed.");
