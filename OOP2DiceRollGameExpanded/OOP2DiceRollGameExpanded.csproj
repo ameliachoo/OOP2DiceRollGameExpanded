@@ -7,4 +7,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Compile Update="ThreeOrMore.cs">
+        <DependentUpon>Game.cs</DependentUpon>
+      </Compile>
+      <Compile Update="SevensOut.cs">
+        <DependentUpon>Game.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
 </Project>
