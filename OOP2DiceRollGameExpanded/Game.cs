@@ -12,29 +12,29 @@ public abstract class Game
     // 'protected': this access modifier restricts the visibility of the method to within its own class and any subclasses
     // 'abstract': this keyword indicates that the method does not have a body or implementation in the current class
     protected abstract void PlayGame();
+    public abstract int RunTests();
+    
+    public string Name { get; set; } = "";
+    public int GamesPlayed { get; set; } = 0;
+    public int HighScore { get; set; } = 0;
     
     /// <summary>
     /// main function where the program execution starts
     /// </summary>
     /// <param name="args"></param>
-
-    // main function where the program execution starts
     static void Main(string[] args)
     {
-        // array to hold game options (currently empty)
+        // array to hold game options
         Game[] gameOptions =
         [
+            new SevensOut(),
+            new ThreeOrMore()
         ];
         
-        // loop through each game option (currently it doesn't loop because the array is empty)
-        for (int i = 0; i < gameOptions.Length; i++)
-        {
-            // print the available games (placeholders are empty)
-            Console.WriteLine("Games:\nSevensOut = []\nThreeOrMore = []");
-        }
+        // print the available games and the number they correlate to 
+        Console.WriteLine("Games:\nSevensOut = 1\nThreeOrMore = 2\n-----------");
         // prompt the user to type 'Test' or 'Reset'
-        Console.WriteLine("Type 'Test' to run tests on the program and 'Reset' to reset the statistics");
-        
+        Console.WriteLine("\nType 'Test' to run tests on the program and 'Reset' to reset the statistics");
         // calls the function to handle game selection
         GameSelection(gameOptions);
     }

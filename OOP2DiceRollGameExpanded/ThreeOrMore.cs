@@ -7,7 +7,19 @@ using System.Threading.Tasks;
 
 namespace OOP2DiceRollGameExpanded;
 
-public class ThreeOrMore
+public class ThreeOrMore : Game
 {
-    
+    public ThreeOrMore()
+    {
+        Name = "ThreeOrMore";
+    }
+
+    protected override void PlayGame()
+    {
+        
+    }
+    public override int RunTests()
+    {
+        return 0;
+    } 
 }
