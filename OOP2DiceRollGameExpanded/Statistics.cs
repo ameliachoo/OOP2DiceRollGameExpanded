@@ -9,5 +9,18 @@ namespace OOP2DiceRollGameExpanded;
 
 public class Statistics
 {
-    
+    public static void LoadStatistics(Game game)
+    {
+        
+    }
+
+    public static void SaveStatistics(Game game)
+    {
+        
+    }
+
+    public static void ResetStatistics()
+    {
+        
+    }
 }
