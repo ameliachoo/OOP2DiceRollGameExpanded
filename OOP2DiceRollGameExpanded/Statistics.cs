@@ -6,23 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using CsvHelper;
-using CsvHelper.Configuration;
+
 
 namespace OOP2DiceRollGameExpanded;
 
 public class Statistics
 {
     private const string FilePath = "../../../stats.csv";
-    
+
     public static void LoadStatistics(Game game)
     {
-        List<StatsRecord> records;
+        List<string> lines;
+        
         try
         {
-            using var reader = new StreamReader(FilePath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            records = csv.GetRecords<StatsRecord>().ToList();
+            lines = File.ReadAllLines(FilePath).ToList();
         }
         catch (FileNotFoundException)
         {
@@ -31,23 +29,23 @@ public class Statistics
             return;
         }
 
-        var existingRecord = records.FirstOrDefault(r => r.GameName == game.Name);
+        var existingLine = lines.FirstOrDefault(line => line.StartsWith(game.Name));
 
-        if (existingRecord != null)
+        if (existingLine != null)
         {
-            game.TimesPlayed = existingRecord.TotalPlays;
-            game.HighScore = existingRecord.HighScore;
+            var parts = existingLine.Split(',');
+            game.GamesPlayed = int.Parse(parts[1]);
+            game.HighScore = int.Parse(parts[2]);
         }
     }
 
     public static void SaveStatistics(Game game)
     {
-        List<StatsRecord> records;
+        List<string> lines;
+
         try
         {
-            using var reader = new StreamReader(FilePath);
-            using var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture));
-            records = csv.GetRecords<StatsRecord>().ToList();
+            lines = File.ReadAllLines(FilePath).ToList();
         }
         catch (FileNotFoundException)
         {
@@ -56,46 +54,31 @@ public class Statistics
             return;
         }
 
-        var existingRecord = records.FirstOrDefault(r => r.GameName == game.Name);
-        
-        if (existingRecord != null)
+        var existingLine = lines.FirstOrDefault(line => line.StartsWith(game.Name));
+
+        if (existingLine != null)
         {
-            existingRecord.TotalPlays = game.TimesPlayed;
-            existingRecord.HighScore = game.HighScore;
+            var parts = existingLine.Split(',');
+            parts[1] = game.GamesPlayed.ToString();
+            parts[2] = game.HighScore.ToString();
+            lines[lines.IndexOf(existingLine)] = string.Join(',', parts);
         }
         else
         {
-            records.Add(new StatsRecord
-            {
-                GameName = game.Name,
-                TotalPlays = game.TimesPlayed,
-                HighScore = game.HighScore
-            });
+            lines.Add($"{game.Name},{game.GamesPlayed},{game.HighScore}");
         }
 
-        using var writer = new StreamWriter(FilePath);
-        using var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture));
-        csvWriter.WriteRecords(records);
+        File.WriteAllLines(FilePath, lines);
     }
 
     public static void ResetStatistics()
     {
-        var records = new List<StatsRecord>
+        var lines = new List<string>
         {
-            new StatsRecord { GameName = "Sevens Out", TotalPlays = 0, HighScore = 0 },
-            new StatsRecord { GameName = "Three Or More", TotalPlays = 0, HighScore = 0 }
+            "Sevens Out,0,0",
+            "Three Or More,0,0"
         };
 
-        using var writer = new StreamWriter(FilePath);
-        using var csvWriter = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture));
-        csvWriter.WriteRecords(records);
-    }
-
-    private class StatsRecord
-    {
-        public string GameName { get; set; }
-        public int TotalPlays { get; set; }
-        public int HighScore { get; set; }
-
+        File.WriteAllLines(FilePath, lines);
     }
 }
