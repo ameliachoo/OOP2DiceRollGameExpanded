@@ -12,22 +12,26 @@ public class SevensOut : Game
     }
     
     /// <summary>
-    /// method to play the SevensOut game (override)
+    /// overrides the base class method to play the SevensOut game
+    /// allows the player to roll two dice repeatedly until the sum of the rolls is 7
+    /// the player's total score and high score are tracked and displayed
+    /// after each game, the statistics are saved using the SaveStatistics method
     /// </summary>
     protected override void PlayGame()
     {
-        // flag to indicate whether the game is over (starts as false)
-        bool gameOver = false;
         // total score for the player (starts at 0)
         int scoreTotal = 0;
-        
         int x = 0;
-
+        // flag to indicate whether the game is over (starts as false)
+        bool gameOver = false;
+        // incrementing games played
         GamesPlayed += 1;
+        // loading the statistics method
+        Statistics.LoadStatistics(this);
         
         // displays to the player what game they have chosen to play
         Console.WriteLine("\n--------\nYou are now playing Sevens Out\n");
-
+        
         // creates an array of two dice objects 
         Die[] dice = new Die[2];
         // initialises each Die object in the array
@@ -40,7 +44,6 @@ public class SevensOut : Game
         {
             // display the current total score and prompt the user to roll the dice again
             Console.WriteLine($"\nYour current total: {scoreTotal} \nPress space to roll the dice again");
-            
             //increment the roll count
             x++;
 
@@ -85,47 +88,55 @@ public class SevensOut : Game
             HighScore = scoreTotal;
             Console.WriteLine("\nYou got a new high score!\n--------");
         }
+        // saving the current statistics using the SaveStatistics method
+        Statistics.SaveStatistics(this);
     }
 
-
-
-
+    /// <summary>
+    /// overrides the base class method to run tests for the SevensOut game
+    /// simulates playing the game multiple times
+    /// tracks the total score achieved and the number of rolls taken to get a sum of 7
+    /// the test results are returned as an integer representing the sum of the dice rolls in the last test
+    /// </summary>
+    /// <returns>
+    /// integer representing the sum of the dice rolls in the last test
+    /// </returns>
     public override int RunTests()
     {
+        int scoreTotal = 0;
+        int x = 0;
         // flag to indicate whether the game is over (starts as false)
         bool gameOver = false;
-        // total score for the player (starts at 0)
-        int scoreTotal = 0;
-
-        int x = 0;
-
+        // test results (set to 0)
         int testResults = 0;
-
-        return 0;
-
+ 
         while (!gameOver)
         {
-            // display the current total score and prompt the user to roll the dice again
+            // displays sevens out is being tested to the user
             Console.WriteLine("\nCurrently testing the SevensOut game\n");
             
+            // creating an array of two dice objects
             Die[] dice = new Die[2];
-
+            // initialising each die object in the array
             for (int i = 0; i < dice.Length; i++)
             {
                 dice[i] = new Die();
             }
-
+            
+            //increment the test count
             x++;
-
+            // rolling each die in the array
             foreach (var num in dice)
             {
                 num.Roll();
             }
-
+            
+            // calculating the sum of the dice rolls
             testResults = dice[0].DiceRoll + dice[1].DiceRoll;
-
+            // checking if the game is over (sum of dice is 7)
             gameOver = (dice[0].DiceRoll + dice[1].DiceRoll == 7);
             
+            // checking if the dice rolls are the same
             if (dice[0].DiceRoll == dice[1].DiceRoll)
             {
                 // if the values are the same...
@@ -141,6 +152,7 @@ public class SevensOut : Game
             }
         }
         Console.WriteLine("Äll tests have been completed");
+        // returning the test results
         return testResults;
     }
 }
