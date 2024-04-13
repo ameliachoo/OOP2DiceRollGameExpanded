@@ -31,10 +31,10 @@ public abstract class Game
             new ThreeOrMore()
         ];
         
-        // print the available games and the number they correlate to 
-        Console.WriteLine("Games:\nSevensOut = 1\nThreeOrMore = 2\n-----------");
         // prompt the user to type 'Test' or 'Reset'
-        Console.WriteLine("\nType 'Test' to run tests on the program and 'Reset' to reset the statistics");
+        Console.WriteLine("\nType 'Test' to run tests on the program and 'Reset' to reset the statistics\n");
+        // print the available games and the number they correlate to 
+        Console.WriteLine("Games:\n----------------\nSevensOut = 1\nThreeOrMore = 2\n----------------");
         // calls the function to handle game selection
         GameSelection(gameOptions);
     }
@@ -53,7 +53,7 @@ public abstract class Game
             // sets the choice variable to 0
             int choice = 0;
             // asks for user input (which game-mode they wish to play)
-            Console.WriteLine("\nPlease choose a game (Sevens Out or Three Or More):");
+            Console.WriteLine("Please choose a game:");
             
             // sets the gameChoice to be whatever the user has inputted
             var gameChoice = Console.ReadLine();
@@ -90,6 +90,8 @@ public abstract class Game
                 
                 // if reset is entered, return from the method
                 case "Reset":
+                    Statistics.ResetStatistics();
+                    Console.WriteLine("Statistics have been reset");
                     return;
                 
                 // continue loop for any other inputs
