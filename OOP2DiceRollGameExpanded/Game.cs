@@ -53,7 +53,7 @@ public abstract class Game
             // sets the choice variable to 0
             int choice = 0;
             // asks for user input (which game-mode they wish to play)
-            Console.WriteLine("Please choose a game:");
+            Console.WriteLine("Please choose a game (1 / 2):");
             
             // sets the gameChoice to be whatever the user has inputted
             var gameChoice = Console.ReadLine();

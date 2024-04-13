@@ -20,6 +20,7 @@ public static class Testing
         // create a new Die object for testing
         var die = new Die();
         
+        
         // loops 1000 times to run multiple tests
         for (int i = 0; i < 1000; i++)
         {
@@ -38,10 +39,22 @@ public static class Testing
         
         // runs tests for SevensOut game and store the results
         int resultSevens = gameOptions[0].RunTests();
+        Debug.Assert(resultSevens == 7, $"Result:{resultSevens}");
         // runs tests for ThreeOrMore game and store the results
         int resultThree = gameOptions[1].RunTests();
+        Debug.Assert(resultThree < 20 && resultThree != -1, $"Result:{resultThree}");
  
         // prints message indicating all tests passed
         Debug.WriteLine("All tests passed.");
+        
+        string logPath = "../../../tests.log";
+        using (StreamWriter sw = new StreamWriter(logPath))
+        {
+            sw.WriteLine($"SevensOut test result: {resultSevens}");
+            sw.WriteLine($"ThreeOrMore test result: {resultThree}");
+            
+        }
+        
+        Console.WriteLine("Tests complete");
     }
 }
