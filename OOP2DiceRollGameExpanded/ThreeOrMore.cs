@@ -16,7 +16,7 @@ public class ThreeOrMore : Game
 
     protected override void PlayGame()
     {
-        
+        Console.WriteLine("Hello World");
     }
     public override int RunTests()
     {

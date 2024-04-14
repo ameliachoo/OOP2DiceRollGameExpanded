@@ -8,7 +8,7 @@ namespace OOP2DiceRollGameExpanded
     public class Statistics
     {
         // file path where the statistics are stored as a CSV file
-        private const string FilePath = "../../../stats.csv";
+        private static string FilePath = @"../../../stats.csv";
 
         /// <summary>
         /// loads the statistics for a specific game from the CSV file
@@ -24,7 +24,6 @@ namespace OOP2DiceRollGameExpanded
             {
                 lines = File.ReadAllLines(FilePath).ToList();
             }
-            
             catch (FileNotFoundException)
             {
                 // if the file is not found it resets the statistics and try again
@@ -93,6 +92,8 @@ namespace OOP2DiceRollGameExpanded
         /// </summary>
         public static void ResetStatistics()
         {
+            if (!File.Exists(FilePath)) File.Create(FilePath);
+            
             // initialize the statistics for the games
             var lines = new List<string>
             {

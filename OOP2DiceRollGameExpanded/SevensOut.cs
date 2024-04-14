@@ -44,6 +44,7 @@ public class SevensOut : Game
         {
             // display the current total score and prompt the user to roll the dice again
             Console.WriteLine($"\nYour current total: {scoreTotal} \nPress space to roll the dice again");
+            Console.ReadLine();
             //increment the roll count
             x++;
 
