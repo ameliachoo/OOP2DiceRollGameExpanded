@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace OOP2DiceRollGameExpanded
+﻿namespace OOP2DiceRollGameExpanded
 {
     public class Statistics
     {
         // file path where the statistics are stored as a CSV file
-        private static string FilePath = @"../../../stats.csv";
+        private static string _filePath = @"../../../stats.csv";
 
         /// <summary>
         /// loads the statistics for a specific game from the CSV file
@@ -22,7 +17,7 @@ namespace OOP2DiceRollGameExpanded
             // attempt to read all lines from the CSV file
             try
             {
-                lines = File.ReadAllLines(FilePath).ToList();
+                lines = File.ReadAllLines(_filePath).ToList();
             }
             catch (FileNotFoundException)
             {
@@ -56,7 +51,7 @@ namespace OOP2DiceRollGameExpanded
             // attempts to read all lines from the CSV file
             try
             {
-                lines = File.ReadAllLines(FilePath).ToList();
+                lines = File.ReadAllLines(_filePath).ToList();
             }
             catch (FileNotFoundException)
             {
@@ -84,7 +79,7 @@ namespace OOP2DiceRollGameExpanded
             }
 
             // write all lines back to the CSV file
-            File.WriteAllLines(FilePath, lines);
+            File.WriteAllLines(_filePath, lines);
         }
 
         /// <summary>
@@ -92,7 +87,7 @@ namespace OOP2DiceRollGameExpanded
         /// </summary>
         public static void ResetStatistics()
         {
-            if (!File.Exists(FilePath)) File.Create(FilePath);
+            if (!File.Exists(_filePath)) File.Create(_filePath);
             
             // initialize the statistics for the games
             var lines = new List<string>
@@ -102,7 +97,7 @@ namespace OOP2DiceRollGameExpanded
             };
 
             // write all lines to the CSV file
-            File.WriteAllLines(FilePath, lines);
+            File.WriteAllLines(_filePath, lines);
         }
     }
 }
