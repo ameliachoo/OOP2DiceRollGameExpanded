@@ -1,210 +1,244 @@
 ﻿namespace OOP2DiceRollGameExpanded
 {
-    // Inherits from the base Game class
+    // inheriting from game class
     public class ThreeOrMore : Game
     {
-        // Constructor to set the game's name
         public ThreeOrMore()
         {
             Name = "ThreeOrMore";
         }
 
         /// <summary>
-        /// Main game logic for playing the "ThreeOrMore" game.
+        /// main game logic for playing ThreeOrMore
         /// </summary>
         protected override void PlayGame()
         {
-            int turn = 0; // Current player's turn
-            int[] playerScores = {0, 0}; // Scores for both players
+            // current players turn
+            int playerTurn = 0; 
+            // scores for both players
+            int[] twoPlayerScores = [0, 0];
             
-            // Load and update game statistics
+            // load and update game statistics
             Statistics.LoadStatistics(this);
+            // increments the games played
             GamesPlayed += 1;
             
-            // Initialize an array of 5 dice
+            // initialize an array of five dice
             Die[] dice = new Die[5];
+            // for loop creating new die objects 
             for(int i = 0; i < dice.Length; i++)
             {
                 dice[i] = new Die();
             }
             
-            // Game loop continues until any player's score is greater than or equal to 20
-            while(playerScores.All(score => score < 20))
+            // game loop continues until any player's score is greater than or equal to 20
+            while(twoPlayerScores.All(score => score < 20))
             {
-                Console.WriteLine($"Player {turn + 1}'s turn!");
-                turn = PlayerTurn(turn, playerScores, dice); // Process player's turn
+                // displays to the players what turn is next
+                Console.WriteLine($"Player {playerTurn + 1}'s turn\n");
+                // process player's turn
+                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice);
             }
             
-            // Determine the winner or if it's a tie
-            if(playerScores[0] > playerScores[1])
+            // determine the winner or if the game is a tie
+            if(twoPlayerScores[0] > twoPlayerScores[1])
             {
-                Console.WriteLine("Player 1 wins!");
+                // displays which player wins
+                Console.WriteLine("Player 1 wins");
             }
-            else if(playerScores[0] < playerScores[1])
+            else if(twoPlayerScores[0] < twoPlayerScores[1])
             {
-                Console.WriteLine("Player 2 wins!");
+                // displays which player wins
+                Console.WriteLine("Player 2 wins");
             }
             else
             {
-                Console.WriteLine("It's a tie!");
+                // displays that the game was a tie
+                Console.WriteLine("This game was a tie");
             }
             
-            // Save game statistics
+            // saves game statistics
             Statistics.SaveStatistics(this);
         }
         
         /// <summary>
-        /// Counts the occurrences of each die roll.
+        /// simulates and runs tests for the ThreeOrMore game
         /// </summary>
-        /// <param name="dice">The array of dice to count.</param>
-        /// <returns>A dictionary containing the count of each die roll.</returns>
-        private static Dictionary<int, int> CountDie(Die[] dice)
-        {
-            var dict = new Dictionary<int, int>();
-            foreach (var t in dice)
-            {
-                dict.TryGetValue(t.DiceRoll, out var count);
-                dict[t.DiceRoll] = count + 1;
-            }
-            return dict;
-        }
-        
-        /// <summary>
-        /// Simulates and runs tests for the "ThreeOrMore" game.
-        /// </summary>
-        /// <returns>The score of the winning player or -1 for a tie.</returns>
+        /// <returns>the score of the winning player or -1 for a tie</returns>
         public override int RunTests()
         {
-            int turn = 0;
-            int[] playerScores = {0, 0};
+            // current players turn
+            int playerTurn = 0;
+            // scores for both players
+            int[] twoPlayerScores = [0, 0];
             
-            // Load and update game statistics
+            // loads and updates game statistics
             Statistics.LoadStatistics(this);
+            // increments the games played
             GamesPlayed += 1;
             
-            // Initialize dice
+            // initialize an array of five dice
             Die[] dice = new Die[5];
+            // for loop creating new die objects 
             for(int i = 0; i < dice.Length; i++)
             {
                 dice[i] = new Die();
             }
             
-            // Game loop without UI interaction
-            while(playerScores.All(score => score < 20))
+            // game loop continues until any player's score is greater than or equal to 20
+            while(twoPlayerScores.All(score => score < 20))
             {
-                turn = PlayerTurn(turn, playerScores, dice);
+                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice);
             }
             
-            // Return winner's score or -1 for a tie
-            if(playerScores[0] > playerScores[1])
+            // return winners score or -1 for a tie
+            if(twoPlayerScores[0] > twoPlayerScores[1])
             {
-                return playerScores[0];
+                return twoPlayerScores[0];
             }
-            else if(playerScores[0] < playerScores[1])
+            else if(twoPlayerScores[0] < twoPlayerScores[1])
             {
-                return playerScores[0];
+                return twoPlayerScores[0];
             }
             else
             {
                 return -1;
             }
         }
-
+        
         /// <summary>
-        /// Executes a player's turn in the "ThreeOrMore" game.
+        /// counts the occurrences of each die roll
         /// </summary>
-        /// <param name="turn">The current player's turn.</param>
-        /// <param name="playerScores">The scores of both players.</param>
-        /// <param name="dice">The array of dice for the game.</param>
-        /// <returns>The next player's turn.</returns>
-        private int PlayerTurn(int turn, int[] playerScores, Die[] dice)
+        /// <param name="dice">the array of dice to count</param>
+        /// <returns>a dictionary containing the count of each die roll</returns>
+        private static Dictionary<int, int> DieCounter(Die[] dice)
         {
-            bool turnOver = false;
-
-            while (!turnOver)
+            // creates a new dictionary variable to store the counts of each die roll
+            var dictionary = new Dictionary<int, int>();
+            
+            // iterates over each Die object in the dice array
+            foreach (var num in dice)
             {
-                // Roll each die and display its value
-                foreach (var t in dice)
+                // tries to get the count of the current die roll from the dictionary
+                // if the key exists then the count is retrieved otherwise it defaults to 0
+                dictionary.TryGetValue(num.DiceRoll, out var count);
+                // increments the count for the current die roll
+                dictionary[num.DiceRoll] = count + 1;
+            }
+            // returns the dictionary containing the counts of each die roll
+            return dictionary;
+        }
+        
+        /// <summary>
+        /// executes a players turn in the ThreeOrMore game
+        /// </summary>
+        /// <param name="playerTurn">the current players turn</param>
+        /// <param name="twoPlayerScores">the scores of both players</param>
+        /// <param name="dice">the array of dice for the game</param>
+        /// <returns>the next players turn</returns>
+        private int PlayerTurn(int playerTurn, int[] twoPlayerScores, Die[] dice)
+        {
+            // boolean for the end of turn
+            bool endOfTurn = false;
+            
+            while (!endOfTurn)
+            {
+                // roll each die and display its value
+                foreach (var num in dice)
                 {
-                    t.Roll();
-                    Console.WriteLine($"Die {Array.IndexOf(dice, t) + 1}: {t.DiceRoll}");
+                    num.Roll();
+                    Console.WriteLine($"\nDie {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
                 }
 
-                // Count occurrences of each die value and display if any value occurs two or more times
-                var dieValues = CountDie(dice);
-                foreach (var pair in dieValues.Where(pair => pair.Value >= 2))
+                // counts occurrences of each die value and display if any value occurs two or more times
+                var dieValue = DieCounter(dice);
+                
+                foreach (var pair in dieValue.Where(pair => pair.Value >= 2))
                 {
-                    Console.WriteLine($"You rolled a {pair.Key} {pair.Value} times!");
+                    // displays to the player what they have rolled multiple times
+                    Console.WriteLine($"\nYou rolled a {pair.Key}, {pair.Value} times.");
                 }
 
-                // Ask the player if they want to re-roll all or remaining dice
-                Console.WriteLine("Would you like to re-roll 'all dice or the 'remaining dice? (a/r)");
-                var choice = Console.ReadLine();
-                if (choice?.ToLower() == "a") continue;
+                // ask the player if they want to re-roll all or remaining dice
+                Console.WriteLine("\nIf you would like to re-roll all dice, type 'a'.\nIf you would like to re-roll the remaining dice, type 'r'.");
+                // reads what the player inputs
+                var rollChoice = Console.ReadLine();
+                
+                // if the roll choice is an a then the program continues
+                if (rollChoice?.ToLower() == "a")
+                {
+                    continue;
+                }
+                
+                // lets the player know the remaining die are being rerolled otherwise
+                Console.WriteLine("\nNow re-rolling remaining die.");
 
-                Console.WriteLine("re-rolling remaining die...");
-
-                // Re-roll dice with a count of 1
-                foreach (var pair in dieValues.Where(pair => pair.Value == 1))
+                // re-roll dice with a count of 1
+                foreach (var pair in dieValue.Where(pair => pair.Value == 1))
                 {
                     dice[Array.IndexOf(dice, dice.First(d => d.DiceRoll == pair.Key))].Roll();
                 }
 
-                // Display re-rolled dice values
-                foreach (var t in dice)
+                // displays the re-rolled dice values
+                foreach (var num in dice)
                 {
-                    Console.WriteLine($"Die {Array.IndexOf(dice, t) + 1}: {t.DiceRoll}");
+                    Console.WriteLine($"\nDie {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
                 }
-
-                // Recount die values after re-roll
-                dieValues = CountDie(dice);
-                foreach (var pair in dieValues)
+                
+                dieValue = DieCounter(dice);
+                // recount the die values after the re-roll
+                foreach (var pair in dieValue)
                 {
                     if (pair.Value >= 2)
                     {
-                        Console.WriteLine($"You rolled a {pair.Key} {pair.Value} times!");
+                        // displays to the player what they have rolled multiple times
+                        Console.WriteLine($"\nYou rolled a {pair.Key}, {pair.Value} times.");
                     }
                 }
 
-                // Determine and display the highest frequency die value
-                var max = dieValues.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
-                Console.WriteLine($"The highest frequency die value is {max} with {dieValues[max]} occurrences!");
+                // determines and display the highest frequency die value
+                var frequentRoll = dieValue.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+                // outputs this result to the players
+                Console.WriteLine($"\nThe most frequently rolled die value is {frequentRoll}, being rolled {dieValue[frequentRoll]} times.");
 
-                // Update player's score based on the highest frequency die value
-                switch (dieValues[max])
+                // update players score based on the highest frequency die value
+                switch (dieValue[frequentRoll])
                 {
+                    case 1:
+                        Console.WriteLine("\nYou got a three of a kind. +3 points.");
+                        twoPlayerScores[playerTurn] += 3;
+                        break;
+                    case 2:
+                        Console.WriteLine("\nYou got a four of a kind +6 points.");
+                        twoPlayerScores[playerTurn] += 6;
+                        break;
                     case 3:
-                        Console.WriteLine("\nYou got a 3-of-a-kind! +3\n");
-                        playerScores[turn] += 3;
-                        break;
-                    case 4:
-                        Console.WriteLine("\nYou got a 4-of-a-kind! +6\n");
-                        playerScores[turn] += 6;
-                        break;
-                    case 5:
-                        Console.WriteLine("\nYou got a 5-of-a-kind! +12\n");
-                        playerScores[turn] += 12;
+                        Console.WriteLine("\nYou got a five of a kind, +12 points.");
+                        twoPlayerScores[playerTurn] += 12;
                         break;
                     default:
-                        Console.WriteLine("\nYou need a 3-of-a-kind or better to gain any points! +0\n");
+                        Console.WriteLine("\nYou must get a three of a kind or more to earn points, no points earned.");
                         break;
                 }
 
-                // Display current turn score and check for a new high score
-                Console.WriteLine($"Turn score: {playerScores[turn]}\n");
-                if (playerScores[turn] > HighScore)
+                // display current turn score to the player
+                Console.WriteLine($"\nYour score this turn was: {twoPlayerScores[playerTurn]}");
+                // changes the player score to be the high score if a high score is achieved
+                if (twoPlayerScores[playerTurn] > HighScore)
                 {
-                    HighScore = playerScores[turn];
-                    Console.WriteLine("New High Score!");
+                    HighScore = twoPlayerScores[playerTurn];
+                    Console.WriteLine("\nYou got a new high score.");
                 }
 
-                // End the turn
-                turnOver = true;
-                turn += 1;
-                turn %= 2; // Toggle between 0 and 1 to switch players
+                // ends the players turn
+                endOfTurn = true;
+                // increments the turn
+                playerTurn += 1;
+                // uses MOD to swap between two values (switching between player 1(0) and player 2(1)
+                playerTurn %= 2;
             }
-
-            return turn; // Return the next player's turn
+            // returns the next players turn
+            return playerTurn;
         }
     }
 }

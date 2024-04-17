@@ -11,18 +11,23 @@ public static class Testing
     {
         // display messages indicating that tests are running
         Console.WriteLine("-----------\nRunning appropriate tests");
-
+        
+        // list for dice rolls
+        List<int> rolls = [];
         // create a new Die object for testing
         var die = new Die();
-        
         
         // loops 1000 times to run multiple tests
         for (int i = 0; i < 1000; i++)
         {
             // rolls the die
             die.Roll();
+            // adds the dice roll values to a list
+            rolls.Add(die.DiceRoll);
             // assert that the rolled value is between 1 and 6 (inclusive)
-            Debug.Assert(die.DiceRoll is >= 1 and <= 6);
+            Debug.Assert(die.DiceRoll is >= 1 and <= 6, $"Dice value = {die.DiceRoll}\n The die value is out of range.");
+            // assert that the number of rolls isn't impossible
+            Debug.Assert(rolls.Count == 1000, "Dice roll count seems to be incorrect");
         }
         
         // array to hold game options
@@ -42,14 +47,24 @@ public static class Testing
         // prints message indicating all tests passed
         Debug.WriteLine("All tests passed.");
         
-        string logPath = "../../../tests.log";
-        using (StreamWriter sw = new StreamWriter(logPath))
+        // define the path for the log file
+        string logTestsFile = "../../../tests.log";
+        // create a StreamWriter object to write to the log file
+        using (StreamWriter sw = new StreamWriter(logTestsFile))
         {
+            // write the rolls list to the log file, converting it to a comma-separated string
+            sw.WriteLine(string.Join(",", rolls));
+            // write the number of rolls to the log file
+            sw.WriteLine($"Number of rolls: {rolls.Count}");
+            
+            // write the result of the SevensOut test to the log file
             sw.WriteLine($"SevensOut test result: {resultSevens}");
+            // w the result of the ThreeOrMore test to the log file
             sw.WriteLine($"ThreeOrMore test result: {resultThree}");
             
         }
-        
-        Console.WriteLine("Tests complete");
+        // print message indicating all tests have been completed and there results
+        Console.WriteLine("All tests have been completed");
+        Console.WriteLine($"\nTests are displayed in the log file: {logTestsFile}");
     }
 }

@@ -52,8 +52,8 @@ public abstract class Game
             var gameChoice = Console.ReadLine();
             
             // try contains the code that might throw and exception
-            //try
-            //{
+            try
+            {
                 // if the game choice is null
                 // the program attempts to parse the users input to an integer and subtracts one
                 // to get to the correct index
@@ -65,15 +65,15 @@ public abstract class Game
             // calls the play game method of the selected game option
             gameOptions[choice].PlayGame();
             break;
-            //}
+            }
             // this handles any exceptions that are thrown in the try block
             
-            /*catch (Exception e)
+            catch (Exception e)
             {
                 // if an exception occurs (e.g., invalid input or index out of range) 
                 // the program jumps to this catch block instead of crashing
                 Console.WriteLine("The game number you have entered was not found");
-            }*/
+            }
             
             // switch case for whether the user wishes to test or reset (currently empty)
             switch (gameChoice)
