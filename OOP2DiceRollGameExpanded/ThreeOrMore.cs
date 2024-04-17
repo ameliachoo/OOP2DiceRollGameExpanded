@@ -35,11 +35,12 @@
             while(twoPlayerScores.All(score => score < 20))
             {
                 // displays to the players what turn is next
-                Console.WriteLine($"Player {playerTurn + 1}'s turn\n");
+                Console.WriteLine($"\nPlayer {playerTurn + 1}'s turn:");
                 // process player's turn
                 playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice);
             }
             
+            Console.WriteLine("\n----------");
             // determine the winner or if the game is a tie
             if(twoPlayerScores[0] > twoPlayerScores[1])
             {
@@ -56,6 +57,7 @@
                 // displays that the game was a tie
                 Console.WriteLine("This game was a tie");
             }
+            Console.WriteLine("----------");
             
             // saves game statistics
             Statistics.SaveStatistics(this);
@@ -144,19 +146,21 @@
             while (!endOfTurn)
             {
                 // roll each die and display its value
+                Console.WriteLine("----------");
                 foreach (var num in dice)
                 {
                     num.Roll();
-                    Console.WriteLine($"\nDie {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
+                    Console.WriteLine($"Die {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
                 }
-
+                Console.WriteLine("----------");
+                
                 // counts occurrences of each die value and display if any value occurs two or more times
                 var dieValue = DieCounter(dice);
                 
                 foreach (var pair in dieValue.Where(pair => pair.Value >= 2))
                 {
                     // displays to the player what they have rolled multiple times
-                    Console.WriteLine($"\nYou rolled a {pair.Key}, {pair.Value} times.");
+                    Console.WriteLine($"You rolled a {pair.Key}, {pair.Value} times.");
                 }
 
                 // ask the player if they want to re-roll all or remaining dice
@@ -180,10 +184,12 @@
                 }
 
                 // displays the re-rolled dice values
+                Console.WriteLine("----------");
                 foreach (var num in dice)
                 {
-                    Console.WriteLine($"\nDie {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
+                    Console.WriteLine($"Die {Array.IndexOf(dice, num) + 1}: {num.DiceRoll}");
                 }
+                Console.WriteLine("----------");
                 
                 dieValue = DieCounter(dice);
                 // recount the die values after the re-roll
@@ -192,9 +198,10 @@
                     if (pair.Value >= 2)
                     {
                         // displays to the player what they have rolled multiple times
-                        Console.WriteLine($"\nYou rolled a {pair.Key}, {pair.Value} times.");
+                        Console.WriteLine($"You rolled a {pair.Key}, {pair.Value} times.");
                     }
                 }
+                
 
                 // determines and display the highest frequency die value
                 var frequentRoll = dieValue.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
@@ -205,19 +212,19 @@
                 switch (dieValue[frequentRoll])
                 {
                     case 1:
-                        Console.WriteLine("\nYou got a three of a kind. +3 points.");
+                        Console.WriteLine("You got a three of a kind. +3 points.");
                         twoPlayerScores[playerTurn] += 3;
                         break;
                     case 2:
-                        Console.WriteLine("\nYou got a four of a kind +6 points.");
+                        Console.WriteLine("You got a four of a kind +6 points.");
                         twoPlayerScores[playerTurn] += 6;
                         break;
                     case 3:
-                        Console.WriteLine("\nYou got a five of a kind, +12 points.");
+                        Console.WriteLine("You got a five of a kind, +12 points.");
                         twoPlayerScores[playerTurn] += 12;
                         break;
                     default:
-                        Console.WriteLine("\nYou must get a three of a kind or more to earn points, no points earned.");
+                        Console.WriteLine("You must get a three of a kind or more to earn points, no points earned.");
                         break;
                 }
 
@@ -227,7 +234,7 @@
                 if (twoPlayerScores[playerTurn] > HighScore)
                 {
                     HighScore = twoPlayerScores[playerTurn];
-                    Console.WriteLine("\nYou got a new high score.");
+                    Console.WriteLine("You got a new high score.");
                 }
 
                 // ends the players turn
