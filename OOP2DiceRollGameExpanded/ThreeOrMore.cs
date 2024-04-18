@@ -211,15 +211,15 @@
                 // update players score based on the highest frequency die value
                 switch (dieValue[frequentRoll])
                 {
-                    case 1:
+                    case 3:
                         Console.WriteLine("You got a three of a kind. +3 points.");
                         twoPlayerScores[playerTurn] += 3;
                         break;
-                    case 2:
+                    case 4:
                         Console.WriteLine("You got a four of a kind +6 points.");
                         twoPlayerScores[playerTurn] += 6;
                         break;
-                    case 3:
+                    case 5:
                         Console.WriteLine("You got a five of a kind, +12 points.");
                         twoPlayerScores[playerTurn] += 12;
                         break;
