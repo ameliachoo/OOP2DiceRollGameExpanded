@@ -25,7 +25,7 @@ public abstract class Game
         ];
         
         // prompt the user to type 'Test' or 'Reset'
-        Console.WriteLine("\nType 'test' to run tests on the program and 'reset' to reset the statistics\n");
+        Console.WriteLine("\nType 'test' to run tests on the program and 'reset' to reset the statistics.\n");
         // print the available games and the number they correlate to 
         Console.WriteLine("Games:\n----------------\nSevensOut = 1\nThreeOrMore = 2\n----------------");
         // calls the function to handle game selection
@@ -73,12 +73,14 @@ public abstract class Game
             {
                 // if test is entered, return from the method
                 case "test":
+                    Testing.RunTest();
+                    Console.WriteLine("Tests have been ran.");
                     break;
                 
                 // if reset is entered, return from the method
                 case "reset":
                     Statistics.ResetStatistics();
-                    Console.WriteLine("Statistics have been reset");
+                    Console.WriteLine("Statistics have been reset.");
                     break;
                 
                 // continue loop for any other inputs
