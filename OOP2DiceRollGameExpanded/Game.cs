@@ -25,7 +25,7 @@ public abstract class Game
         ];
         
         // prompt the user to type 'Test' or 'Reset'
-        Console.WriteLine("\nType 'Test' to run tests on the program and 'Reset' to reset the statistics\n");
+        Console.WriteLine("\nType 'test' to run tests on the program and 'reset' to reset the statistics\n");
         // print the available games and the number they correlate to 
         Console.WriteLine("Games:\n----------------\nSevensOut = 1\nThreeOrMore = 2\n----------------");
         // calls the function to handle game selection
@@ -51,42 +51,35 @@ public abstract class Game
             // sets the gameChoice to be whatever the user has inputted
             var gameChoice = Console.ReadLine();
             
-            // try contains the code that might throw and exception
-            try
-            {
-                // if the game choice is null
-                // the program attempts to parse the users input to an integer and subtracts one
-                // to get to the correct index
-            if (gameChoice != null)
+            // if the game choice is null
+            // the program attempts to parse the users input to an integer and subtracts one
+            // to get to the correct index
+            if (gameChoice != null && !(gameChoice?.ToLower() == "test" || gameChoice?.ToLower() == "reset"))
             {
                 choice = int.Parse(gameChoice) - 1;
+                // calls the play game method of the selected game option
+                gameOptions[choice].PlayGame();
+                break;
             }
-            
-            // calls the play game method of the selected game option
-            gameOptions[choice].PlayGame();
-            break;
-            }
-            // this handles any exceptions that are thrown in the try block
-            
-            catch (Exception e)
+            /*catch (Exception e)
             {
                 // if an exception occurs (e.g., invalid input or index out of range) 
                 // the program jumps to this catch block instead of crashing
                 Console.WriteLine("The game number you have entered was not found");
-            }
+            }*/
             
             // switch case for whether the user wishes to test or reset (currently empty)
             switch (gameChoice)
             {
                 // if test is entered, return from the method
-                case "Test":
-                    return;
+                case "test":
+                    break;
                 
                 // if reset is entered, return from the method
-                case "Reset":
+                case "reset":
                     Statistics.ResetStatistics();
                     Console.WriteLine("Statistics have been reset");
-                    return;
+                    break;
                 
                 // continue loop for any other inputs
                 default:

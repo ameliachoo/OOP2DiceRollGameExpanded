@@ -204,7 +204,7 @@
                 
 
                 // determines and display the highest frequency die value
-                var frequentRoll = dieValue.Aggregate((l, r) => l.Value > r.Value ? l : r).Key;
+                var frequentRoll = dieValue.MaxBy(kv => kv.Value).Key;
                 // outputs this result to the players
                 Console.WriteLine($"\nThe most frequently rolled die value is {frequentRoll}, being rolled {dieValue[frequentRoll]} times.");
 
