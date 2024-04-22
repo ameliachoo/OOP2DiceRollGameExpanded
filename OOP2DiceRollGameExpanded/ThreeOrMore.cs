@@ -13,6 +13,7 @@
         /// </summary>
         protected override void PlayGame()
         {
+            bool multiplayer = false;
             // current players turn
             int playerTurn = 0; 
             // scores for both players
@@ -22,6 +23,9 @@
             Statistics.LoadStatistics(this);
             // increments the games played
             GamesPlayed += 1;
+            
+            Console.WriteLine("Do you want to play multiplayer? (y/n):");
+            multiplayer = Console.ReadLine() == "y";
             
             // initialize an array of five dice
             Die[] dice = new Die[5];
@@ -37,7 +41,7 @@
                 // displays to the players what turn is next
                 Console.WriteLine($"\nPlayer {playerTurn + 1}'s turn:");
                 // process player's turn
-                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice);
+                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice, multiplayer);
             }
             
             Console.WriteLine("\n----------");
@@ -90,7 +94,7 @@
             // game loop continues until any player's score is greater than or equal to 20
             while(twoPlayerScores.All(score => score < 20))
             {
-                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice);
+                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice, false);
             }
             
             // return winners score or -1 for a tie
@@ -138,10 +142,11 @@
         /// <param name="twoPlayerScores">the scores of both players</param>
         /// <param name="dice">the array of dice for the game</param>
         /// <returns>the next players turn</returns>
-        private int PlayerTurn(int playerTurn, int[] twoPlayerScores, Die[] dice)
+        private int PlayerTurn(int playerTurn, int[] twoPlayerScores, Die[] dice, bool multiplayer)
         {
             // boolean for the end of turn
             bool endOfTurn = false;
+            if (multiplayer) Console.WriteLine("You have chosen to player Multiplayer");
             
             while (!endOfTurn)
             {
@@ -163,17 +168,39 @@
                     Console.WriteLine($"You rolled a {pair.Key}, {pair.Value} times.");
                 }
 
-                // ask the player if they want to re-roll all or remaining dice
-                Console.WriteLine("\nIf you would like to re-roll all dice, type 'a'.\nIf you would like to re-roll the remaining dice, type 'r'.");
-                // reads what the player inputs
-                var rollChoice = Console.ReadLine();
-                
-                // if the roll choice is an a then the program continues
-                if (rollChoice?.ToLower() == "a")
+                if (playerTurn == 1 && multiplayer == false)
                 {
-                    continue;
+                    // ask the player if they want to re-roll all or remaining dice
+                    Console.WriteLine(
+                        "\nIf you would like to re-roll all dice, type 'a'.\nIf you would like to re-roll the remaining dice, type 'r'.");
+                    // reads what the player inputs
+                    var rollChoice = Console.ReadLine();
+
+                    // if the roll choice is an a then the program continues
+                    if (rollChoice?.ToLower() == "a")
+                    {
+                        continue;
+                    }
                 }
-                
+                else // multiplayer off
+                {
+                    // ask the player if they want to re-roll all or remaining dice
+                    Console.WriteLine(
+                        "\nIf you would like to re-roll all dice, type 'a'.\nIf you would like to re-roll the remaining dice, type 'r'.");
+                    // reads what the player inputs
+                    var rollChoice = Console.ReadLine();
+
+                    // if the roll choice is an a then the program continues
+                    if (rollChoice?.ToLower() == "a")
+                    {
+                        continue;
+                    }
+                }
+
+
+
+
+
                 // lets the player know the remaining die are being rerolled otherwise
                 Console.WriteLine("\nNow re-rolling remaining die.");
 
