@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace OOP2DiceRollGameExpanded;
 
@@ -27,8 +28,9 @@ public static class Testing
             // assert that the rolled value is between 1 and 6 (inclusive)
             Debug.Assert(die.DiceRoll is >= 1 and <= 6, $"Dice value = {die.DiceRoll}\n The die value is out of range.");
             // assert that the number of rolls isn't impossible
-            Debug.Assert(rolls.Count == 1000, "Dice roll count seems to be incorrect");
         }
+        Debug.Assert(rolls.Count == 1000, "Dice roll count seems to be incorrect");
+
         
         // array to hold game options
         Game[] gameOptions =
@@ -42,7 +44,7 @@ public static class Testing
         Debug.Assert(resultSevens == 7, $"Result:{resultSevens}");
         // runs tests for ThreeOrMore game and store the results
         int resultThree = gameOptions[1].RunTests();
-        Debug.Assert(resultThree < 20 && resultThree != -1, $"Result:{resultThree}");
+        Debug.Assert(resultThree > 20 || resultThree == -1, $"Result:{resultThree}");
  
         // prints message indicating all tests passed
         Debug.WriteLine("All tests passed.");

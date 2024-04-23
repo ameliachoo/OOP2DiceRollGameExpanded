@@ -13,7 +13,7 @@
         /// </summary>
         protected override void PlayGame()
         {
-            bool multiplayer = false;
+            bool computer = false;
             // current players turn
             int playerTurn = 0; 
             // scores for both players
@@ -24,8 +24,8 @@
             // increments the games played
             GamesPlayed += 1;
             
-            Console.WriteLine("Do you want to play multiplayer? (y/n):");
-            multiplayer = Console.ReadLine() == "y";
+            Console.WriteLine("Do you want to play against the computer? (y/n):");
+            computer = Console.ReadLine() == "y";
             
             // initialize an array of five dice
             Die[] dice = new Die[5];
@@ -41,7 +41,7 @@
                 // displays to the players what turn is next
                 Console.WriteLine($"\nPlayer {playerTurn + 1}'s turn:");
                 // process player's turn
-                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice, multiplayer);
+                playerTurn = PlayerTurn(playerTurn, twoPlayerScores, dice, computer);
             }
             
             Console.WriteLine("\n----------");
@@ -104,7 +104,7 @@
             }
             else if(twoPlayerScores[0] < twoPlayerScores[1])
             {
-                return twoPlayerScores[0];
+                return twoPlayerScores[1];
             }
             else
             {
@@ -142,11 +142,10 @@
         /// <param name="twoPlayerScores">the scores of both players</param>
         /// <param name="dice">the array of dice for the game</param>
         /// <returns>the next players turn</returns>
-        private int PlayerTurn(int playerTurn, int[] twoPlayerScores, Die[] dice, bool multiplayer)
+        private int PlayerTurn(int playerTurn, int[] twoPlayerScores, Die[] dice, bool computer)
         {
             // boolean for the end of turn
             bool endOfTurn = false;
-            if (multiplayer) Console.WriteLine("You have chosen to player Multiplayer");
             
             while (!endOfTurn)
             {
@@ -168,7 +167,7 @@
                     Console.WriteLine($"You rolled a {pair.Key}, {pair.Value} times.");
                 }
 
-                if (playerTurn == 1 && multiplayer == false)
+                if (playerTurn == 1 && computer == false)
                 {
                     // ask the player if they want to re-roll all or remaining dice
                     Console.WriteLine(
@@ -182,7 +181,7 @@
                         continue;
                     }
                 }
-                else // multiplayer off
+                else if(playerTurn == 0) // multiplayer off
                 {
                     // ask the player if they want to re-roll all or remaining dice
                     Console.WriteLine(
@@ -197,10 +196,7 @@
                     }
                 }
 
-
-
-
-
+                
                 // lets the player know the remaining die are being rerolled otherwise
                 Console.WriteLine("\nNow re-rolling remaining die.");
 
