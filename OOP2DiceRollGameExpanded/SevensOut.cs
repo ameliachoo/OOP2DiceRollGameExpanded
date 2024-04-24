@@ -114,9 +114,6 @@ public class SevensOut : Game
  
         while (!gameOver)
         {
-            // displays sevens out is being tested to the user
-            Console.WriteLine("\nCurrently testing the SevensOut game\n");
-            
             // creating an array of two dice objects
             Die[] dice = new Die[2];
             // initialising each die object in the array
@@ -153,7 +150,6 @@ public class SevensOut : Game
                 scoreTotal += dice[0].DiceRoll + dice[1].DiceRoll;
             }
         }
-        Console.WriteLine("Äll tests have been completed");
         // returning the test results
         return testResults;
     }

@@ -11,7 +11,7 @@ public static class Testing
     public static void RunTest() 
     {
         // display messages indicating that tests are running
-        Console.WriteLine("-----------\nRunning appropriate tests");
+        Console.WriteLine("-----------\nRunning appropriate tests, please finish a game to get these test results");
         
         // list for dice rolls
         List<int> rolls = [];
@@ -54,19 +54,18 @@ public static class Testing
         // create a StreamWriter object to write to the log file
         using (StreamWriter sw = new StreamWriter(logTestsFile))
         {
+            // write the result of the SevensOut test to the log file
+            sw.WriteLine($"SevensOut win condition check: {resultSevens} meaning test has passed");
+            // w the result of the ThreeOrMore test to the log file
+            sw.WriteLine($"ThreeOrMore win condition check : {resultThree} meaning test has passed");
+            
+            sw.WriteLine("--------------------------");
             // write the rolls list to the log file, converting it to a comma-separated string
             sw.WriteLine(string.Join(",", rolls));
             // write the number of rolls to the log file
             sw.WriteLine($"Number of rolls: {rolls.Count}");
-            
-            // write the result of the SevensOut test to the log file
-            sw.WriteLine($"SevensOut test result: {resultSevens}");
-            // w the result of the ThreeOrMore test to the log file
-            sw.WriteLine($"ThreeOrMore test result: {resultThree}");
-            
         }
-        // print message indicating all tests have been completed and there results
-        Console.WriteLine("All tests have been completed");
-        Console.WriteLine($"\nTests are displayed in the log file: {logTestsFile}");
+        // print message indicating all tests have been completed and their location
+        Console.WriteLine($"\n------------------\nTests are complete \nTesting results are displayed in the log file: {logTestsFile}\n");
     }
 }

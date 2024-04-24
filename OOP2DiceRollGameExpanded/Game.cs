@@ -74,7 +74,6 @@ public abstract class Game
                 // if test is entered, return from the method
                 case "test":
                     Testing.RunTest();
-                    Console.WriteLine("Tests have been ran.");
                     break;
                 
                 // if reset is entered, return from the method
@@ -89,5 +88,4 @@ public abstract class Game
             }
         }        
     }
-
 }
