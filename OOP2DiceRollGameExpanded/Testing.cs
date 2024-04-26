@@ -3,13 +3,12 @@ using System.Runtime.InteropServices;
 
 namespace OOP2DiceRollGameExpanded;
 
-public static class Testing
-{
+public static class Testing {
+    
     /// <summary>
     /// method to run tests for the dice rolling game
     /// </summary>
-    public static void RunTest() 
-    {
+    public static void RunTest() {
         // display messages indicating that tests are running
         Console.WriteLine("-----------\nRunning appropriate tests, please finish a game to get these test results");
         
@@ -19,8 +18,7 @@ public static class Testing
         var die = new Die();
         
         // loops 1000 times to run multiple tests
-        for (int i = 0; i < 1000; i++)
-        {
+        for (int i = 0; i < 1000; i++) {
             // rolls the die
             die.Roll();
             // adds the dice roll values to a list
@@ -34,10 +32,10 @@ public static class Testing
         
         // array to hold game options
         Game[] gameOptions =
-        {
+        [
             new SevensOut(),
             new ThreeOrMore()
-        };
+        ];
         
         // runs tests for SevensOut game and store the results
         int resultSevens = gameOptions[0].RunTests();
@@ -52,8 +50,7 @@ public static class Testing
         // define the path for the log file
         string logTestsFile = "../../../tests.log";
         // create a StreamWriter object to write to the log file
-        using (StreamWriter sw = new StreamWriter(logTestsFile))
-        {
+        using (StreamWriter sw = new StreamWriter(logTestsFile)) {
             // write the result of the SevensOut test to the log file
             sw.WriteLine($"SevensOut win condition check: {resultSevens} meaning test has passed");
             // w the result of the ThreeOrMore test to the log file

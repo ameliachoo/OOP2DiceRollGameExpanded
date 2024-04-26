@@ -14,11 +14,9 @@ public class Die
     /// rolls the die and returns the result
     /// </summary>
     /// <returns> returns the DiceRoll </returns>
-    public int Roll() {
-            
+    public int Roll() {      
         // generates a random number between 1 and 6 (inclusive) to simulate a die roll
         DiceRoll = _rnd.Next(1, 7);
-            
         // returns the result of the die roll
         return DiceRoll;
     }

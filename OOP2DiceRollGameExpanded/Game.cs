@@ -1,7 +1,6 @@
 ﻿namespace OOP2DiceRollGameExpanded;
 
-public abstract class Game
-{
+public abstract class Game {
     // 'protected': this access modifier restricts the visibility of the method to within its own class and any subclasses
     // 'abstract': this keyword indicates that the method does not have a body or implementation in the current class
     protected abstract void PlayGame();
@@ -15,8 +14,7 @@ public abstract class Game
     /// main function where the program execution starts
     /// </summary>
     /// <param name="args"></param>
-    static void Main(string[] args)
-    {
+    static void Main(string[] args) {
         // array to hold game options
         Game[] gameOptions =
         [
@@ -25,7 +23,7 @@ public abstract class Game
         ];
         
         // prompt the user to type 'Test' or 'Reset'
-        Console.WriteLine("\nType 'test' to run tests on the program and 'reset' to reset the statistics.\n");
+        Console.WriteLine("\nType 'test' to run tests on the program, 'stats' to display statistics and 'reset' to reset the statistics.\n");
         // print the available games and the number they correlate to 
         Console.WriteLine("Games:\n----------------\nSevensOut = 1\nThreeOrMore = 2\n----------------");
         // calls the function to handle game selection
@@ -38,11 +36,9 @@ public abstract class Game
     /// ...and validates the input before executing the selected game or command
     /// </summary>
     /// <param name="gameOptions">Array of available game options.</param>
-    private static void GameSelection(Game[] gameOptions)
-    {
+    private static void GameSelection(Game[] gameOptions) {
 
-        while (true)
-        {
+        while (true) {
             // sets the choice variable to 0
             int choice = 0;
             // asks for user input (which game-mode they wish to play)
@@ -54,34 +50,29 @@ public abstract class Game
             // if the game choice is null
             // the program attempts to parse the users input to an integer and subtracts one
             // to get to the correct index
-            if (gameChoice != null && !(gameChoice?.ToLower() == "test" || gameChoice?.ToLower() == "reset"))
-            {
+            // lets the user input a choice that is not a number
+            if (gameChoice != null && !(gameChoice?.ToLower() == "test" || gameChoice?.ToLower() == "reset" || gameChoice?.ToLower() == "stats")) {
                 choice = int.Parse(gameChoice) - 1;
                 // calls the play game method of the selected game option
                 gameOptions[choice].PlayGame();
                 break;
             }
-            /*catch (Exception e)
-            {
-                // if an exception occurs (e.g., invalid input or index out of range) 
-                // the program jumps to this catch block instead of crashing
-                Console.WriteLine("The game number you have entered was not found");
-            }*/
             
             // switch case for whether the user wishes to test or reset (currently empty)
-            switch (gameChoice)
-            {
+            switch (gameChoice) {
                 // if test is entered, return from the method
                 case "test":
                     Testing.RunTest();
                     break;
-                
+                // displays the statistics
+                case "stats":
+                    Statistics.DisplayStatistics();
+                    return;
                 // if reset is entered, return from the method
                 case "reset":
                     Statistics.ResetStatistics();
                     Console.WriteLine("Statistics have been reset.");
                     break;
-                
                 // continue loop for any other inputs
                 default:
                     break;

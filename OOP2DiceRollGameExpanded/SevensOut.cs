@@ -1,14 +1,13 @@
 ﻿namespace OOP2DiceRollGameExpanded;
 
 // inheriting from the game class
-public class SevensOut : Game
-{
+public class SevensOut : Game {
+    
     /// <summary>
     /// constructor for the SevensOut class
     /// sets the name of the game to 'SevensOut'
     /// </summary>
-    public SevensOut()
-    {
+    public SevensOut() {
         Name = "SevensOut";
     }
     
@@ -18,8 +17,7 @@ public class SevensOut : Game
     /// the player's total score and high score are tracked and displayed
     /// after each game, the statistics are saved using the SaveStatistics method
     /// </summary>
-    protected override void PlayGame()
-    {
+    protected override void PlayGame() {
         // total score for the player (starts at 0)
         int scoreTotal = 0;
         int x = 0;
@@ -36,13 +34,11 @@ public class SevensOut : Game
         // creates an array of two dice objects 
         Die[] dice = new Die[2];
         // initialises each Die object in the array
-        for (int i = 0; i < dice.Length; i++)
-        {
+        for (int i = 0; i < dice.Length; i++) {
             dice[i] = new Die();
         }
 
-        while (!gameOver)
-        {
+        while (!gameOver) {
             // display the current total score and prompt the user to roll the dice again
             Console.WriteLine($"\nYour current total: {scoreTotal} \nPress enter to roll the dice again");
             Console.ReadLine();
@@ -50,8 +46,7 @@ public class SevensOut : Game
             x++;
 
             // rolls each die in the dice array
-            foreach (var num in dice)
-            {
+            foreach (var num in dice) {
                 num.Roll();
             }
             
@@ -63,15 +58,13 @@ public class SevensOut : Game
             gameOver = (dice[0].DiceRoll + dice[1].DiceRoll == 7);
             
             // checking if the values of both dice are the same
-            if (dice[0].DiceRoll == dice[1].DiceRoll)
-            {
+            if (dice[0].DiceRoll == dice[1].DiceRoll) {
                 // if the values are the same...
                 // the sum is doubled...
                 // and added to the total score
                 scoreTotal += (dice[0].DiceRoll + dice[1].DiceRoll) * 2;
             }
-            else
-            {
+            else {
                 // if the values are different...
                 // adds the sum of the dice values to the total score
                 scoreTotal += dice[0].DiceRoll + dice[1].DiceRoll;
@@ -84,8 +77,7 @@ public class SevensOut : Game
         Console.WriteLine($"\nYou rolled a total of seven, with your end total being: {scoreTotal}");
         
         // checks if the final score is higher than the current high score
-        if (scoreTotal > HighScore)
-        {
+        if (scoreTotal > HighScore) {
             // sets the new score to be the high score and outputs a message to the user 
             HighScore = scoreTotal;
             Console.WriteLine("\nYou got a new high score!\n--------");
@@ -103,8 +95,7 @@ public class SevensOut : Game
     /// <returns>
     /// integer representing the sum of the dice rolls in the last test
     /// </returns>
-    public override int RunTests()
-    {
+    public override int RunTests() {
         int scoreTotal = 0;
         int x = 0;
         // flag to indicate whether the game is over (starts as false)
@@ -112,21 +103,18 @@ public class SevensOut : Game
         // test results (set to 0)
         int testResults = 0;
  
-        while (!gameOver)
-        {
+        while (!gameOver) {
             // creating an array of two dice objects
             Die[] dice = new Die[2];
             // initialising each die object in the array
-            for (int i = 0; i < dice.Length; i++)
-            {
+            for (int i = 0; i < dice.Length; i++) {
                 dice[i] = new Die();
             }
             
             //increment the test count
             x++;
             // rolling each die in the array
-            foreach (var num in dice)
-            {
+            foreach (var num in dice) {
                 num.Roll();
             }
             
@@ -136,15 +124,13 @@ public class SevensOut : Game
             gameOver = (dice[0].DiceRoll + dice[1].DiceRoll == 7);
             
             // checking if the dice rolls are the same
-            if (dice[0].DiceRoll == dice[1].DiceRoll)
-            {
+            if (dice[0].DiceRoll == dice[1].DiceRoll) {
                 // if the values are the same...
                 // the sum is doubled...
                 // and added to the total score
                 scoreTotal += (dice[0].DiceRoll + dice[1].DiceRoll) * 2;
             }
-            else
-            {
+            else {
                 // if the values are different...
                 // adds the sum of the dice values to the total score
                 scoreTotal += dice[0].DiceRoll + dice[1].DiceRoll;
